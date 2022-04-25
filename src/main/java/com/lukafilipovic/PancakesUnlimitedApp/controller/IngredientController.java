@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/ingredients")
 public class IngredientController {
@@ -15,6 +17,7 @@ public class IngredientController {
     public IngredientController(IngredientService ingredientService) {
         this.ingredientService = ingredientService;
     }
+
     @PostMapping("/{categoryId}")
     public ResponseEntity<IngredientDto> addIngredient(@RequestBody IngredientDto ingredientDto, @PathVariable(name = "categoryId") long categoryId){
         return new ResponseEntity<>(ingredientService.addIngredient(ingredientDto,categoryId), HttpStatus.CREATED);
@@ -29,5 +32,10 @@ public class IngredientController {
     @PutMapping("/{id}")
     public ResponseEntity<IngredientDto> updateIngredient(@RequestBody IngredientDto ingredientDto, @PathVariable(name = "id") long id){
         return new ResponseEntity<>(ingredientService.updateIngredient(ingredientDto, id), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public List<IngredientDto> viewAllIngredients(){
+        return ingredientService.viewAllIngredients();
     }
 }

@@ -1,13 +1,13 @@
 package com.lukafilipovic.PancakesUnlimitedApp.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
 
 @Entity
@@ -24,4 +24,7 @@ public class Ingredient {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
     private IngredientCategory category;
+
+    @ManyToMany(mappedBy = "pancakeIngredients", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Pancake> pancakes=new HashSet<>();
 }
