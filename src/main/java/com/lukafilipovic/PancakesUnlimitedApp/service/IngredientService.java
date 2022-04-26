@@ -1,13 +1,13 @@
 package com.lukafilipovic.PancakesUnlimitedApp.service;
 
-import com.lukafilipovic.PancakesUnlimitedApp.model.Ingredient;
 import com.lukafilipovic.PancakesUnlimitedApp.payload.IngredientDto;
+import com.lukafilipovic.PancakesUnlimitedApp.payload.IngredientResponseDto;
 
 import java.util.List;
 
 public interface IngredientService {
-    IngredientDto addIngredient(IngredientDto ingredientDto, long category_id);
+    IngredientResponseDto addIngredient(IngredientDto ingredientDto);
     void deleteIngredient(long id);
-    IngredientDto updateIngredient(IngredientDto ingredientDto, long id);
-    List<IngredientDto> viewAllIngredients();
+    IngredientResponseDto updateIngredient(IngredientDto ingredientDto, long id);
+    List<IngredientResponseDto> viewAllIngredients();
 }

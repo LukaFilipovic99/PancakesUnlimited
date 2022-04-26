@@ -26,4 +26,8 @@ public class Pancake {
     )
     private Set<Ingredient> pancakeIngredients=new HashSet<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", nullable = true)
+    private Order order;
+
 }

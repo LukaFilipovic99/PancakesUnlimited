@@ -1,13 +1,14 @@
 package com.lukafilipovic.PancakesUnlimitedApp.service;
 
 import com.lukafilipovic.PancakesUnlimitedApp.payload.PancakeDto;
+import com.lukafilipovic.PancakesUnlimitedApp.payload.PancakeResponseDto;
 
 import java.util.List;
 
 public interface PancakeService {
-    PancakeDto createPancake(List<Long> ingredientIds);
+    PancakeResponseDto createPancake(PancakeDto pancakeDto);
     void deletePancake(long id);
-    PancakeDto updatePancake(long id, List<Long> ingredientIds);
-    List<PancakeDto> getAllPancakes();
-    PancakeDto getPancakeById(long id);
+    PancakeResponseDto updatePancake(long id, PancakeDto pancakeDto);
+    List<PancakeResponseDto> getAllPancakes();
+    PancakeResponseDto getPancakeById(long id);
 }

@@ -5,11 +5,13 @@ import com.lukafilipovic.PancakesUnlimitedApp.exceptions.IdNotFoundException;
 import com.lukafilipovic.PancakesUnlimitedApp.model.Ingredient;
 import com.lukafilipovic.PancakesUnlimitedApp.model.IngredientCategory;
 import com.lukafilipovic.PancakesUnlimitedApp.payload.IngredientDto;
+import com.lukafilipovic.PancakesUnlimitedApp.payload.IngredientResponseDto;
 import com.lukafilipovic.PancakesUnlimitedApp.repository.IngredientCategoryRepository;
 import com.lukafilipovic.PancakesUnlimitedApp.repository.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +28,11 @@ public class IngredientServiceImplementation implements IngredientService{
 
 
     @Override
-    public IngredientDto addIngredient(IngredientDto ingredientDto, long categoryId) {
-        Ingredient ingredient= MapDtosEntities.mapIngredientToEntity(ingredientDto);
-        IngredientCategory category=categoryRepository.findById(categoryId).orElseThrow(()->new IdNotFoundException("Category Id not found."));
+    public IngredientResponseDto addIngredient(IngredientDto ingredientDto) {
+        Ingredient ingredient=new Ingredient();
+        ingredient.setName(ingredientDto.getName());
+        ingredient.setPrice(ingredientDto.getPrice());
+        IngredientCategory category=categoryRepository.findById(ingredientDto.getCategoryId()).orElseThrow(()->new IdNotFoundException("Category Id not found."));
         ingredient.setCategory(category);
         Ingredient newIngredient=ingredientRepository.save(ingredient);
         return MapDtosEntities.mapIngredientToDto(newIngredient);
@@ -41,7 +45,7 @@ public class IngredientServiceImplementation implements IngredientService{
     }
 
     @Override
-    public IngredientDto updateIngredient(IngredientDto ingredientDto, long id) {
+    public IngredientResponseDto updateIngredient(IngredientDto ingredientDto, long id) {
         Ingredient ingredient = ingredientRepository.findById(id).orElseThrow(()->new IdNotFoundException("Ingredient Id not found."));
         ingredient.setName(ingredientDto.getName());
         ingredient.setPrice(ingredientDto.getPrice());
@@ -50,12 +54,12 @@ public class IngredientServiceImplementation implements IngredientService{
     }
 
     @Override
-    public List<IngredientDto> viewAllIngredients() {
+    public List<IngredientResponseDto> viewAllIngredients() {
         List<Ingredient> ingredients=ingredientRepository.findAll();
-        List<IngredientDto> ingredientDtos=new ArrayList<>();
+        List<IngredientResponseDto> ingredientResponseDtos =new ArrayList<>();
         for (Ingredient i:ingredients) {
-            ingredientDtos.add(MapDtosEntities.mapIngredientToDto(i));
+            ingredientResponseDtos.add(MapDtosEntities.mapIngredientToDto(i));
         }
-        return ingredientDtos;
+        return ingredientResponseDtos;
     }
 }

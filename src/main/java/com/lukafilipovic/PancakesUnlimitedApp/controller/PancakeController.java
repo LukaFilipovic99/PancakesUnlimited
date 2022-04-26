@@ -1,7 +1,7 @@
 package com.lukafilipovic.PancakesUnlimitedApp.controller;
 
-import com.lukafilipovic.PancakesUnlimitedApp.model.Ingredient;
 import com.lukafilipovic.PancakesUnlimitedApp.payload.PancakeDto;
+import com.lukafilipovic.PancakesUnlimitedApp.payload.PancakeResponseDto;
 import com.lukafilipovic.PancakesUnlimitedApp.service.PancakeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +18,9 @@ public class PancakeController {
         this.pancakeService = pancakeService;
     }
 
-    @PostMapping("/{ingredientIds}")
-    private ResponseEntity<PancakeDto> createPancake(@PathVariable(name = "ingredientIds") List<Long> ingredientIds){
-        return new ResponseEntity<>(pancakeService.createPancake(ingredientIds), HttpStatus.CREATED);
+    @PostMapping()
+    private ResponseEntity<PancakeResponseDto> createPancake(@RequestBody PancakeDto pancakeDto){
+        return new ResponseEntity<>(pancakeService.createPancake(pancakeDto), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -28,18 +28,18 @@ public class PancakeController {
         pancakeService.deletePancake(id);
         return new ResponseEntity<>("Pancake deleted.", HttpStatus.OK);
     }
-    @PutMapping("/{id}/ingredients/{ingredientIds}")
-    private ResponseEntity<PancakeDto> updatePancake(@PathVariable(name="id") long id, @PathVariable(name="ingredientIds") List<Long> ingredientIds){
-        return new ResponseEntity<>(pancakeService.updatePancake(id, ingredientIds), HttpStatus.OK);
+    @PutMapping("/{id}")
+    private ResponseEntity<PancakeResponseDto> updatePancake(@PathVariable(name="id") long id, @RequestBody PancakeDto pancakeDto){
+        return new ResponseEntity<>(pancakeService.updatePancake(id, pancakeDto), HttpStatus.OK);
     }
 
     @GetMapping
-    private List<PancakeDto> getAllPancakes(){
+    private List<PancakeResponseDto> getAllPancakes(){
         return pancakeService.getAllPancakes();
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<PancakeDto> getPancakeById(@PathVariable(name="id") long id){
+    private ResponseEntity<PancakeResponseDto> getPancakeById(@PathVariable(name="id") long id){
         return new ResponseEntity<>(pancakeService.getPancakeById(id), HttpStatus.OK);
     }
 }

@@ -5,8 +5,8 @@ import com.lukafilipovic.PancakesUnlimitedApp.exceptions.IdNotFoundException;
 import com.lukafilipovic.PancakesUnlimitedApp.exceptions.PancakeApiException;
 import com.lukafilipovic.PancakesUnlimitedApp.model.Ingredient;
 import com.lukafilipovic.PancakesUnlimitedApp.model.Pancake;
-import com.lukafilipovic.PancakesUnlimitedApp.payload.IngredientDto;
 import com.lukafilipovic.PancakesUnlimitedApp.payload.PancakeDto;
+import com.lukafilipovic.PancakesUnlimitedApp.payload.PancakeResponseDto;
 import com.lukafilipovic.PancakesUnlimitedApp.repository.IngredientRepository;
 import com.lukafilipovic.PancakesUnlimitedApp.repository.PancakeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +30,12 @@ public class PancakeServiceImplementation implements PancakeService{
 
 
     @Override
-    public PancakeDto createPancake(List<Long> ingredientIds) {
+    public PancakeResponseDto createPancake(PancakeDto pancakeDto) {
         int numOfBazaIngredients=0;
         int numOfNadjevIngredients=0;
         Pancake pancake = new Pancake();
         Pancake newPancake;
-        for (Long id: ingredientIds){
+        for (Long id: pancakeDto.getIngredientIds()){
             Ingredient ingredient=ingredientRepository.findById(id).orElseThrow(()->new IdNotFoundException("Ingredient Id not found!"));
             pancake.getPancakeIngredients().add(ingredient);
             if(ingredient.getCategory().getId()==1) numOfBazaIngredients++;
@@ -62,12 +62,14 @@ public class PancakeServiceImplementation implements PancakeService{
     }
 
     @Override
-    public PancakeDto updatePancake(long id, List<Long> ingredientIds) {
+    public PancakeResponseDto updatePancake(long id, PancakeDto pancakeDto) {
         Pancake pancake=pancakeRepository.findById(id).orElseThrow(()->new IdNotFoundException("Pancake Id not found"));
+
         Pancake updatedPancake;
         int numOfBazaIngredients=0;
         int numOfNadjevIngredients=0;
-        for (Long ingId: ingredientIds){
+        pancake.getPancakeIngredients().clear();
+        for (Long ingId: pancakeDto.getIngredientIds()){
             Ingredient ingredient=ingredientRepository.findById(ingId).orElseThrow(()->new IdNotFoundException("Ingredient Id not found!"));
             pancake.getPancakeIngredients().add(ingredient);
             if(ingredient.getCategory().getId()==1) numOfBazaIngredients++;
@@ -80,17 +82,17 @@ public class PancakeServiceImplementation implements PancakeService{
     }
 
     @Override
-    public List<PancakeDto> getAllPancakes() {
+    public List<PancakeResponseDto> getAllPancakes() {
         List<Pancake> pancakes=pancakeRepository.findAll();
-        List<PancakeDto> pancakeDtos=new ArrayList<>();
+        List<PancakeResponseDto> pancakeResponseDtos =new ArrayList<>();
         for (Pancake pancake: pancakes){
-            pancakeDtos.add(MapDtosEntities.mapPancakeToDto(pancake));
+            pancakeResponseDtos.add(MapDtosEntities.mapPancakeToDto(pancake));
         }
-        return pancakeDtos;
+        return pancakeResponseDtos;
     }
 
     @Override
-    public PancakeDto getPancakeById(long id) {
+    public PancakeResponseDto getPancakeById(long id) {
         Pancake pancake=pancakeRepository.findById(id).orElseThrow(()->new IdNotFoundException("Pancake Id not found"));
         return MapDtosEntities.mapPancakeToDto(pancake);
     }

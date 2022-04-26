@@ -1,7 +1,7 @@
 package com.lukafilipovic.PancakesUnlimitedApp.controller;
 
-import com.lukafilipovic.PancakesUnlimitedApp.model.Ingredient;
 import com.lukafilipovic.PancakesUnlimitedApp.payload.IngredientDto;
+import com.lukafilipovic.PancakesUnlimitedApp.payload.IngredientResponseDto;
 import com.lukafilipovic.PancakesUnlimitedApp.service.IngredientService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +18,9 @@ public class IngredientController {
         this.ingredientService = ingredientService;
     }
 
-    @PostMapping("/{categoryId}")
-    public ResponseEntity<IngredientDto> addIngredient(@RequestBody IngredientDto ingredientDto, @PathVariable(name = "categoryId") long categoryId){
-        return new ResponseEntity<>(ingredientService.addIngredient(ingredientDto,categoryId), HttpStatus.CREATED);
+    @PostMapping()
+    public ResponseEntity<IngredientResponseDto> addIngredient(@RequestBody IngredientDto ingredientDto){
+        return new ResponseEntity<>(ingredientService.addIngredient(ingredientDto), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -30,12 +30,12 @@ public class IngredientController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<IngredientDto> updateIngredient(@RequestBody IngredientDto ingredientDto, @PathVariable(name = "id") long id){
+    public ResponseEntity<IngredientResponseDto> updateIngredient(@RequestBody IngredientDto ingredientDto, @PathVariable(name = "id") long id){
         return new ResponseEntity<>(ingredientService.updateIngredient(ingredientDto, id), HttpStatus.OK);
     }
 
     @GetMapping
-    public List<IngredientDto> viewAllIngredients(){
+    public List<IngredientResponseDto> viewAllIngredients(){
         return ingredientService.viewAllIngredients();
     }
 }
