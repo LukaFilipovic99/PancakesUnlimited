@@ -12,5 +12,4 @@ public class OrderResponseDto {
     private String description;
     private LocalTime time;
     private Set<PancakeResponseDto> listOfPancakes=new HashSet<>();
-
 }

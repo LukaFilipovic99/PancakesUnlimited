@@ -3,9 +3,9 @@ package com.lukafilipovic.PancakesUnlimitedApp.payload;
 import lombok.Data;
 
 @Data
-public class IngredientResponseDto {
-    private Long id;
+public class IngredientDto {
     private String name;
     private Double price;
-    private String category;
+    private Long categoryId;
+    private Boolean healthy;
 }
