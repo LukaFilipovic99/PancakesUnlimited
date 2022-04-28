@@ -1,4 +1,4 @@
-package com.lukafilipovic.PancakesUnlimitedApp.payload;
+package com.lukafilipovic.PancakesUnlimitedApp.payload.Response;
 
 import lombok.Data;
 

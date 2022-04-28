@@ -1,7 +1,7 @@
 package com.lukafilipovic.PancakesUnlimitedApp.service;
 
-import com.lukafilipovic.PancakesUnlimitedApp.payload.PancakeDto;
-import com.lukafilipovic.PancakesUnlimitedApp.payload.PancakeResponseDto;
+import com.lukafilipovic.PancakesUnlimitedApp.payload.Request.PancakeDto;
+import com.lukafilipovic.PancakesUnlimitedApp.payload.Response.PancakeResponseDto;
 
 import java.util.List;
 

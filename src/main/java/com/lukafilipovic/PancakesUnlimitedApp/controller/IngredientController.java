@@ -1,12 +1,13 @@
 package com.lukafilipovic.PancakesUnlimitedApp.controller;
 
-import com.lukafilipovic.PancakesUnlimitedApp.payload.IngredientDto;
-import com.lukafilipovic.PancakesUnlimitedApp.payload.IngredientResponseDto;
+import com.lukafilipovic.PancakesUnlimitedApp.payload.Request.IngredientDto;
+import com.lukafilipovic.PancakesUnlimitedApp.payload.Response.IngredientResponseDto;
 import com.lukafilipovic.PancakesUnlimitedApp.service.IngredientService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,7 @@ public class IngredientController {
     }
 
     @PostMapping()
-    public ResponseEntity<IngredientResponseDto> addIngredient(@RequestBody IngredientDto ingredientDto){
+    public ResponseEntity<IngredientResponseDto> addIngredient(@Valid @RequestBody IngredientDto ingredientDto){
         return new ResponseEntity<>(ingredientService.addIngredient(ingredientDto), HttpStatus.CREATED);
     }
 
@@ -30,7 +31,7 @@ public class IngredientController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<IngredientResponseDto> updateIngredient(@RequestBody IngredientDto ingredientDto, @PathVariable(name = "id") long id){
+    public ResponseEntity<IngredientResponseDto> updateIngredient(@Valid @RequestBody IngredientDto ingredientDto, @PathVariable(name = "id") long id){
         return new ResponseEntity<>(ingredientService.updateIngredient(ingredientDto, id), HttpStatus.OK);
     }
 

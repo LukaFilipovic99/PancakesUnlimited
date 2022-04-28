@@ -20,6 +20,8 @@ public class Ingredient {
     private String name;
     @Column(nullable = false)
     private Double price;
+    @Column(nullable = false)
+    private Boolean healthy;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)

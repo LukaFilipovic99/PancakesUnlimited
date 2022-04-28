@@ -1,12 +1,13 @@
 package com.lukafilipovic.PancakesUnlimitedApp.controller;
 
-import com.lukafilipovic.PancakesUnlimitedApp.payload.PancakeDto;
-import com.lukafilipovic.PancakesUnlimitedApp.payload.PancakeResponseDto;
+import com.lukafilipovic.PancakesUnlimitedApp.payload.Request.PancakeDto;
+import com.lukafilipovic.PancakesUnlimitedApp.payload.Response.PancakeResponseDto;
 import com.lukafilipovic.PancakesUnlimitedApp.service.PancakeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,7 @@ public class PancakeController {
     }
 
     @PostMapping()
-    private ResponseEntity<PancakeResponseDto> createPancake(@RequestBody PancakeDto pancakeDto){
+    private ResponseEntity<PancakeResponseDto> createPancake(@Valid @RequestBody PancakeDto pancakeDto){
         return new ResponseEntity<>(pancakeService.createPancake(pancakeDto), HttpStatus.CREATED);
     }
 
@@ -29,7 +30,7 @@ public class PancakeController {
         return new ResponseEntity<>("Pancake deleted.", HttpStatus.OK);
     }
     @PutMapping("/{id}")
-    private ResponseEntity<PancakeResponseDto> updatePancake(@PathVariable(name="id") long id, @RequestBody PancakeDto pancakeDto){
+    private ResponseEntity<PancakeResponseDto> updatePancake(@Valid @PathVariable(name="id") long id, @RequestBody PancakeDto pancakeDto){
         return new ResponseEntity<>(pancakeService.updatePancake(id, pancakeDto), HttpStatus.OK);
     }
 

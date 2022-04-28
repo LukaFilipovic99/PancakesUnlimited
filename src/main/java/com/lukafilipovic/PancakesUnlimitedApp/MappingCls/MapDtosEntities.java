@@ -3,9 +3,9 @@ package com.lukafilipovic.PancakesUnlimitedApp.MappingCls;
 import com.lukafilipovic.PancakesUnlimitedApp.model.Ingredient;
 import com.lukafilipovic.PancakesUnlimitedApp.model.Order;
 import com.lukafilipovic.PancakesUnlimitedApp.model.Pancake;
-import com.lukafilipovic.PancakesUnlimitedApp.payload.IngredientResponseDto;
-import com.lukafilipovic.PancakesUnlimitedApp.payload.OrderResponseDto;
-import com.lukafilipovic.PancakesUnlimitedApp.payload.PancakeResponseDto;
+import com.lukafilipovic.PancakesUnlimitedApp.payload.Response.*;
+
+import java.util.Map;
 
 public class MapDtosEntities {
     public static IngredientResponseDto mapIngredientToDto(Ingredient ingredient){
@@ -14,6 +14,7 @@ public class MapDtosEntities {
         ingredientResponseDto.setName(ingredient.getName());
         ingredientResponseDto.setPrice(ingredient.getPrice());
         ingredientResponseDto.setCategory(ingredient.getCategory().getName());
+        ingredientResponseDto.setHealthy(ingredient.getHealthy());
         return ingredientResponseDto;
     }
 
@@ -39,4 +40,26 @@ public class MapDtosEntities {
         }
         return orderResponseDto;
     }
-}
+
+    public static PancakeResponseWithPriceDto mapPancakeWithPriceToDto(Pancake pancake, double pancakePrice){
+        PancakeResponseWithPriceDto pancakeResponseWithPriceDto=new PancakeResponseWithPriceDto();
+        pancakeResponseWithPriceDto.setId(pancake.getId());
+        pancakeResponseWithPriceDto.setPrice(pancakePrice);
+        for (Ingredient i:pancake.getPancakeIngredients()){
+            pancakeResponseWithPriceDto.getPancakeIngredients().add(mapIngredientToDto(i));
+        }
+        return pancakeResponseWithPriceDto;
+    }
+
+    public static OrderResponseWithPriceDto mapOrderWithPriceToDto(Order order, double orderPrice, Map<Pancake,Double> pancakePrices){
+        OrderResponseWithPriceDto orderResponseWithPriceDto=new OrderResponseWithPriceDto();
+        orderResponseWithPriceDto.setId(order.getId());
+        orderResponseWithPriceDto.setDescription(order.getDescription());
+        orderResponseWithPriceDto.setTime(order.getTime());
+        orderResponseWithPriceDto.setPrice(orderPrice);
+        for (Pancake p: pancakePrices.keySet()){
+            orderResponseWithPriceDto.getListOfPancakes().add(mapPancakeWithPriceToDto(p, pancakePrices.get(p)));
+        }
+        return orderResponseWithPriceDto;
+        }
+    }
