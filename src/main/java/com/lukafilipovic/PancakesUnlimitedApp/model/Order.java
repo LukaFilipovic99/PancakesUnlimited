@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,8 +25,7 @@ public class Order {
     @Column
     private String description;
     @Column(name = "ordered_at", nullable = false)
-    @JsonFormat(pattern = "HH:mm:ss")
-    private LocalTime time;
+    private LocalDateTime dateTime;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.MERGE,orphanRemoval = true)
     private Set<Pancake> listOfPancakes=new HashSet<>();

@@ -1,6 +1,6 @@
 package com.lukafilipovic.PancakesUnlimitedApp.service;
 
-import com.lukafilipovic.PancakesUnlimitedApp.MappingCls.MapDtosEntities;
+import com.lukafilipovic.PancakesUnlimitedApp.MappingCls.MappingToDto;
 import com.lukafilipovic.PancakesUnlimitedApp.exceptions.IdNotFoundException;
 import com.lukafilipovic.PancakesUnlimitedApp.model.Ingredient;
 import com.lukafilipovic.PancakesUnlimitedApp.model.IngredientCategory;
@@ -35,7 +35,7 @@ public class IngredientServiceImplementation implements IngredientService{
         IngredientCategory category=categoryRepository.findById(ingredientDto.getCategoryId()).orElseThrow(()->new IdNotFoundException("Category Id not found."));
         ingredient.setCategory(category);
         Ingredient newIngredient=ingredientRepository.save(ingredient);
-        return MapDtosEntities.mapIngredientToDto(newIngredient);
+        return MappingToDto.mapIngredientToDto(newIngredient);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class IngredientServiceImplementation implements IngredientService{
         IngredientCategory category=categoryRepository.findById(ingredientDto.getCategoryId()).orElseThrow(()->new IdNotFoundException("Category Id not found."));
         ingredient.setCategory(category);
         Ingredient updatedIngredient=ingredientRepository.save(ingredient);
-        return MapDtosEntities.mapIngredientToDto(updatedIngredient);
+        return MappingToDto.mapIngredientToDto(updatedIngredient);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class IngredientServiceImplementation implements IngredientService{
         List<Ingredient> ingredients=ingredientRepository.findAll();
         List<IngredientResponseDto> ingredientResponseDtos =new ArrayList<>();
         for (Ingredient i:ingredients) {
-            ingredientResponseDtos.add(MapDtosEntities.mapIngredientToDto(i));
+            ingredientResponseDtos.add(MappingToDto.mapIngredientToDto(i));
         }
         return ingredientResponseDtos;
     }

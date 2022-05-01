@@ -1,6 +1,6 @@
 package com.lukafilipovic.PancakesUnlimitedApp.service;
 
-import com.lukafilipovic.PancakesUnlimitedApp.MappingCls.MapDtosEntities;
+import com.lukafilipovic.PancakesUnlimitedApp.MappingCls.MappingToDto;
 import com.lukafilipovic.PancakesUnlimitedApp.exceptions.IdNotFoundException;
 import com.lukafilipovic.PancakesUnlimitedApp.exceptions.OrderApiException;
 import com.lukafilipovic.PancakesUnlimitedApp.model.Ingredient;
@@ -14,7 +14,7 @@ import com.lukafilipovic.PancakesUnlimitedApp.repository.PancakeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,14 +39,14 @@ public class OrderServiceImplementation implements OrderService{
             }
             else throw new OrderApiException("Cannot add pancake to multiple orders.");
         }
-        order.setTime(LocalTime.now());
+        order.setDateTime(LocalDateTime.now());
         order.setDescription(orderDto.getDescription());
         Order newOrder=orderRepository.save(order);
         for (Pancake p: newOrder.getListOfPancakes()){
             p.setOrder(newOrder);
             pancakeRepository.save(p);
         }
-        return MapDtosEntities.mapOrderToDto(newOrder);
+        return MappingToDto.mapOrderToDto(newOrder);
     }
 
     @Override
@@ -65,8 +65,8 @@ public class OrderServiceImplementation implements OrderService{
         }
         double orderPriceHealthy=sumOrderPrice(pancakePricesHealthy);
         OrderResponseWithPriceDto orderResponseWithPriceDto;
-        if (orderPrice<=orderPriceHealthy) orderResponseWithPriceDto=MapDtosEntities.mapOrderWithPriceToDto(order,orderPrice,pancakePrices);
-        else orderResponseWithPriceDto=MapDtosEntities.mapOrderWithPriceToDto(order,orderPriceHealthy,pancakePricesHealthy);
+        if (orderPrice<=orderPriceHealthy) orderResponseWithPriceDto= MappingToDto.mapOrderWithPriceToDto(order,orderPrice,pancakePrices);
+        else orderResponseWithPriceDto= MappingToDto.mapOrderWithPriceToDto(order,orderPriceHealthy,pancakePricesHealthy);
         return orderResponseWithPriceDto;
     }
 

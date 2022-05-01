@@ -2,6 +2,7 @@ package com.lukafilipovic.PancakesUnlimitedApp.controller;
 
 import com.lukafilipovic.PancakesUnlimitedApp.payload.Request.IngredientDto;
 import com.lukafilipovic.PancakesUnlimitedApp.payload.Response.IngredientResponseDto;
+import com.lukafilipovic.PancakesUnlimitedApp.repository.IngredientRepository;
 import com.lukafilipovic.PancakesUnlimitedApp.service.IngredientService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,8 @@ import java.util.List;
 public class IngredientController {
     private IngredientService ingredientService;
 
-    public IngredientController(IngredientService ingredientService) {
+
+    public IngredientController(IngredientService ingredientService, IngredientRepository ingredientRepository) {
         this.ingredientService = ingredientService;
     }
 
@@ -39,4 +41,5 @@ public class IngredientController {
     public List<IngredientResponseDto> viewAllIngredients(){
         return ingredientService.viewAllIngredients();
     }
+
 }

@@ -7,7 +7,7 @@ import com.lukafilipovic.PancakesUnlimitedApp.payload.Response.*;
 
 import java.util.Map;
 
-public class MapDtosEntities {
+public class MappingToDto {
     public static IngredientResponseDto mapIngredientToDto(Ingredient ingredient){
         IngredientResponseDto ingredientResponseDto =new IngredientResponseDto();
         ingredientResponseDto.setId(ingredient.getId());
@@ -33,7 +33,7 @@ public class MapDtosEntities {
         OrderResponseDto orderResponseDto =new OrderResponseDto();
         orderResponseDto.setId(order.getId());
         orderResponseDto.setDescription(order.getDescription());
-        orderResponseDto.setTime(order.getTime());
+        orderResponseDto.setDateTime(order.getDateTime());
         for (Pancake p:order.getListOfPancakes()){
             PancakeResponseDto pancakeResponseDto =mapPancakeToDto(p);
             orderResponseDto.getListOfPancakes().add(pancakeResponseDto);
@@ -55,7 +55,7 @@ public class MapDtosEntities {
         OrderResponseWithPriceDto orderResponseWithPriceDto=new OrderResponseWithPriceDto();
         orderResponseWithPriceDto.setId(order.getId());
         orderResponseWithPriceDto.setDescription(order.getDescription());
-        orderResponseWithPriceDto.setTime(order.getTime());
+        orderResponseWithPriceDto.setDateTime(order.getDateTime());
         orderResponseWithPriceDto.setPrice(orderPrice);
         for (Pancake p: pancakePrices.keySet()){
             orderResponseWithPriceDto.getListOfPancakes().add(mapPancakeWithPriceToDto(p, pancakePrices.get(p)));

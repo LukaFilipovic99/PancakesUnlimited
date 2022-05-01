@@ -1,6 +1,6 @@
 package com.lukafilipovic.PancakesUnlimitedApp.service;
 
-import com.lukafilipovic.PancakesUnlimitedApp.MappingCls.MapDtosEntities;
+import com.lukafilipovic.PancakesUnlimitedApp.MappingCls.MappingToDto;
 import com.lukafilipovic.PancakesUnlimitedApp.exceptions.IdNotFoundException;
 import com.lukafilipovic.PancakesUnlimitedApp.exceptions.PancakeApiException;
 import com.lukafilipovic.PancakesUnlimitedApp.model.Ingredient;
@@ -44,7 +44,7 @@ public class PancakeServiceImplementation implements PancakeService{
         if (numOfBazaIngredients==1 && numOfNadjevIngredients>=1){
             newPancake=pancakeRepository.save(pancake);
         }else throw new PancakeApiException("Pancake must contain 1 BAZA ingredient and 1 or more NADJEV ingredients");
-        return MapDtosEntities.mapPancakeToDto(newPancake);
+        return MappingToDto.mapPancakeToDto(newPancake);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class PancakeServiceImplementation implements PancakeService{
         if (numOfBazaIngredients==1 && numOfNadjevIngredients>=1){
             updatedPancake=pancakeRepository.save(pancake);
         }else throw new PancakeApiException("Pancake must contain 1 BAZA ingredient and 1 or more NADJEV ingredients");
-        return MapDtosEntities.mapPancakeToDto(updatedPancake);
+        return MappingToDto.mapPancakeToDto(updatedPancake);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class PancakeServiceImplementation implements PancakeService{
         List<Pancake> pancakes=pancakeRepository.findAll();
         List<PancakeResponseDto> pancakeResponseDtos =new ArrayList<>();
         for (Pancake pancake: pancakes){
-            pancakeResponseDtos.add(MapDtosEntities.mapPancakeToDto(pancake));
+            pancakeResponseDtos.add(MappingToDto.mapPancakeToDto(pancake));
         }
         return pancakeResponseDtos;
     }
@@ -94,7 +94,7 @@ public class PancakeServiceImplementation implements PancakeService{
     @Override
     public PancakeResponseDto getPancakeById(long id) {
         Pancake pancake=pancakeRepository.findById(id).orElseThrow(()->new IdNotFoundException("Pancake Id not found"));
-        return MapDtosEntities.mapPancakeToDto(pancake);
+        return MappingToDto.mapPancakeToDto(pancake);
     }
 
 
