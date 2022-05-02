@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class PancakeApiException extends RuntimeException{
-    public PancakeApiException(String message) {
-        super(message);
+    public PancakeApiException() {
+        super("Pancake must contain 1 BAZA ingredient and 1 or more NADJEV ingredients");
     }
 }

@@ -33,11 +33,11 @@ public class OrderServiceImplementation implements OrderService{
     public OrderResponseDto createOrder(OrderDto orderDto) {
         Order order=new Order();
         for (Long id: orderDto.getPancakeIds()) {
-            Pancake pancake = pancakeRepository.findById(id).orElseThrow(() -> new IdNotFoundException("Pancake Id not found."));
+            Pancake pancake = pancakeRepository.findById(id).orElseThrow(() -> new IdNotFoundException("Pancake"));
             if (pancake.getOrder()==null) {
                 order.getListOfPancakes().add(pancake);
             }
-            else throw new OrderApiException("Cannot add pancake to multiple orders.");
+            else throw new OrderApiException();
         }
         order.setDateTime(LocalDateTime.now());
         order.setDescription(orderDto.getDescription());
@@ -51,7 +51,7 @@ public class OrderServiceImplementation implements OrderService{
 
     @Override
     public OrderResponseWithPriceDto getOrderById(long id) {
-        Order order=orderRepository.findById(id).orElseThrow(()-> new IdNotFoundException("Order Id not found."));
+        Order order=orderRepository.findById(id).orElseThrow(()-> new IdNotFoundException("Order"));
         Map<Pancake,Double> pancakePrices=sumPancakesPrices(order);
         double orderPrice=sumOrderPrice(pancakePrices);
         if (orderPrice>200.0) orderPrice=0.9*orderPrice;

@@ -36,20 +36,20 @@ public class PancakeServiceImplementation implements PancakeService{
         Pancake pancake = new Pancake();
         Pancake newPancake;
         for (Long id: pancakeDto.getIngredientIds()){
-            Ingredient ingredient=ingredientRepository.findById(id).orElseThrow(()->new IdNotFoundException("Ingredient Id not found!"));
+            Ingredient ingredient=ingredientRepository.findById(id).orElseThrow(()->new IdNotFoundException("Ingredient"));
             pancake.getPancakeIngredients().add(ingredient);
             if(ingredient.getCategory().getId()==1) numOfBazaIngredients++;
             if (ingredient.getCategory().getId()==2) numOfNadjevIngredients++;
         }
         if (numOfBazaIngredients==1 && numOfNadjevIngredients>=1){
             newPancake=pancakeRepository.save(pancake);
-        }else throw new PancakeApiException("Pancake must contain 1 BAZA ingredient and 1 or more NADJEV ingredients");
+        }else throw new PancakeApiException();
         return MappingToDto.mapPancakeToDto(newPancake);
     }
 
     @Override
     public void deletePancake(long id) {
-        Pancake pancake=pancakeRepository.findById(id).orElseThrow(()->new IdNotFoundException("Pancake Id not found"));
+        Pancake pancake=pancakeRepository.findById(id).orElseThrow(()->new IdNotFoundException("Pancake"));
         Set<Ingredient> ingredientsToRemove=new HashSet<>();
         for (Ingredient i: pancake.getPancakeIngredients()){
             ingredientsToRemove.add(i);
@@ -63,21 +63,21 @@ public class PancakeServiceImplementation implements PancakeService{
 
     @Override
     public PancakeResponseDto updatePancake(long id, PancakeDto pancakeDto) {
-        Pancake pancake=pancakeRepository.findById(id).orElseThrow(()->new IdNotFoundException("Pancake Id not found"));
+        Pancake pancake=pancakeRepository.findById(id).orElseThrow(()->new IdNotFoundException("Pancake"));
 
         Pancake updatedPancake;
         int numOfBazaIngredients=0;
         int numOfNadjevIngredients=0;
         pancake.getPancakeIngredients().clear();
         for (Long ingId: pancakeDto.getIngredientIds()){
-            Ingredient ingredient=ingredientRepository.findById(ingId).orElseThrow(()->new IdNotFoundException("Ingredient Id not found!"));
+            Ingredient ingredient=ingredientRepository.findById(ingId).orElseThrow(()->new IdNotFoundException("Ingredient"));
             pancake.getPancakeIngredients().add(ingredient);
             if(ingredient.getCategory().getId()==1) numOfBazaIngredients++;
             if (ingredient.getCategory().getId()==2) numOfNadjevIngredients++;
         }
         if (numOfBazaIngredients==1 && numOfNadjevIngredients>=1){
             updatedPancake=pancakeRepository.save(pancake);
-        }else throw new PancakeApiException("Pancake must contain 1 BAZA ingredient and 1 or more NADJEV ingredients");
+        }else throw new PancakeApiException();
         return MappingToDto.mapPancakeToDto(updatedPancake);
     }
 
@@ -93,7 +93,7 @@ public class PancakeServiceImplementation implements PancakeService{
 
     @Override
     public PancakeResponseDto getPancakeById(long id) {
-        Pancake pancake=pancakeRepository.findById(id).orElseThrow(()->new IdNotFoundException("Pancake Id not found"));
+        Pancake pancake=pancakeRepository.findById(id).orElseThrow(()->new IdNotFoundException("Pancake"));
         return MappingToDto.mapPancakeToDto(pancake);
     }
 

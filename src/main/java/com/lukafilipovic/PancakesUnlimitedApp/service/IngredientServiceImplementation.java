@@ -32,7 +32,7 @@ public class IngredientServiceImplementation implements IngredientService{
         ingredient.setName(ingredientDto.getName());
         ingredient.setPrice(ingredientDto.getPrice());
         ingredient.setHealthy(ingredientDto.getHealthy());
-        IngredientCategory category=categoryRepository.findById(ingredientDto.getCategoryId()).orElseThrow(()->new IdNotFoundException("Category Id not found."));
+        IngredientCategory category=categoryRepository.findById(ingredientDto.getCategoryId()).orElseThrow(()->new IdNotFoundException("Category"));
         ingredient.setCategory(category);
         Ingredient newIngredient=ingredientRepository.save(ingredient);
         return MappingToDto.mapIngredientToDto(newIngredient);
@@ -40,17 +40,17 @@ public class IngredientServiceImplementation implements IngredientService{
 
     @Override
     public void deleteIngredient(long id) {
-        Ingredient ingredient=ingredientRepository.findById(id).orElseThrow(()->new IdNotFoundException("Ingredient Id not found."));
+        Ingredient ingredient=ingredientRepository.findById(id).orElseThrow(()->new IdNotFoundException("Ingredient"));
         ingredientRepository.delete(ingredient);
     }
 
     @Override
     public IngredientResponseDto updateIngredient(IngredientDto ingredientDto, long id) {
-        Ingredient ingredient = ingredientRepository.findById(id).orElseThrow(()->new IdNotFoundException("Ingredient Id not found."));
+        Ingredient ingredient = ingredientRepository.findById(id).orElseThrow(()->new IdNotFoundException("Ingredient"));
         ingredient.setName(ingredientDto.getName());
         ingredient.setPrice(ingredientDto.getPrice());
         ingredient.setHealthy(ingredientDto.getHealthy());
-        IngredientCategory category=categoryRepository.findById(ingredientDto.getCategoryId()).orElseThrow(()->new IdNotFoundException("Category Id not found."));
+        IngredientCategory category=categoryRepository.findById(ingredientDto.getCategoryId()).orElseThrow(()->new IdNotFoundException("Category"));
         ingredient.setCategory(category);
         Ingredient updatedIngredient=ingredientRepository.save(ingredient);
         return MappingToDto.mapIngredientToDto(updatedIngredient);
