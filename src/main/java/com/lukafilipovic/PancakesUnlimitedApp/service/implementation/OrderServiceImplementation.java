@@ -1,4 +1,4 @@
-package com.lukafilipovic.PancakesUnlimitedApp.service;
+package com.lukafilipovic.PancakesUnlimitedApp.service.implementation;
 
 import com.lukafilipovic.PancakesUnlimitedApp.MappingCls.MappingToDto;
 import com.lukafilipovic.PancakesUnlimitedApp.exceptions.IdNotFoundException;
@@ -11,6 +11,7 @@ import com.lukafilipovic.PancakesUnlimitedApp.payload.Response.OrderResponseDto;
 import com.lukafilipovic.PancakesUnlimitedApp.payload.Response.OrderResponseWithPriceDto;
 import com.lukafilipovic.PancakesUnlimitedApp.repository.OrderRepository;
 import com.lukafilipovic.PancakesUnlimitedApp.repository.PancakeRepository;
+import com.lukafilipovic.PancakesUnlimitedApp.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class OrderServiceImplementation implements OrderService{
+public class OrderServiceImplementation implements OrderService {
     private OrderRepository orderRepository;
     private PancakeRepository pancakeRepository;
 

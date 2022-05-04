@@ -1,4 +1,4 @@
-package com.lukafilipovic.PancakesUnlimitedApp.service;
+package com.lukafilipovic.PancakesUnlimitedApp.service.implementation;
 
 import com.lukafilipovic.PancakesUnlimitedApp.MappingCls.MappingToDto;
 import com.lukafilipovic.PancakesUnlimitedApp.exceptions.IdNotFoundException;
@@ -9,6 +9,7 @@ import com.lukafilipovic.PancakesUnlimitedApp.payload.Request.PancakeDto;
 import com.lukafilipovic.PancakesUnlimitedApp.payload.Response.PancakeResponseDto;
 import com.lukafilipovic.PancakesUnlimitedApp.repository.IngredientRepository;
 import com.lukafilipovic.PancakesUnlimitedApp.repository.PancakeRepository;
+import com.lukafilipovic.PancakesUnlimitedApp.service.PancakeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class PancakeServiceImplementation implements PancakeService{
+public class PancakeServiceImplementation implements PancakeService {
     private PancakeRepository pancakeRepository;
     private IngredientRepository ingredientRepository;
 

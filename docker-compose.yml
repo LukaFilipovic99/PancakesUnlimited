@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+
+  mysql-pancakes-unlimited:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: database99
+      MYSQL_DATABASE: pancakes_unlimited
+    ports:
+      - "3308:3306"
